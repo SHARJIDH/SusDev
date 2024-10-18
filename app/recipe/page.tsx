@@ -31,27 +31,27 @@ export default function Recipes() {
     // Generate 20 random recipe cards when the component mounts
     const generateRandomRecipes = () => {
       const recipes = [
-  { title: "Vegan Lentil Curry", description: "A hearty and flavorful plant-based dish", image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=2070&auto=format&fit=crop" },
-  { title: "Quinoa Stuffed Bell Peppers", description: "Colorful and nutritious vegetarian meal", image: "https://images.unsplash.com/photo-1600335895229-6e75511892c8?q=80&w=2070&auto=format&fit=crop" },
-  { title: "Zucchini Noodles with Pesto", description: "Light and refreshing low-carb option", image: "https://images.unsplash.com/photo-1656360633367-8a1fba72c6a7?q=80&w=1946&auto=format&fit=crop" },
-  { title: "Mushroom Risotto", description: "Creamy and comforting Italian classic", image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?q=80&w=2070&auto=format&fit=crop" },
-  { title: "Chickpea Salad Sandwich", description: "Quick and easy plant-based lunch", image: "https://images.unsplash.com/photo-1550507992-eb63ffee0847?q=80&w=2070&auto=format&fit=crop" },
-  { title: "Vegetable Stir-Fry", description: "Colorful mix of veggies in a savory sauce", image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=2072&auto=format&fit=crop" },
-  { title: "Sweet Potato Black Bean Burrito", description: "Filling and flavorful wrapped delight", image: "https://images.unsplash.com/photo-1681072784447-c4ca1611f9f1?q=80&w=2070&auto=format&fit=crop" },
-  { title: "Cauliflower Buffalo Wings", description: "Spicy and crispy vegetarian appetizer", image: "https://images.unsplash.com/photo-1562967914-608f82629710?q=80&w=2073&auto=format&fit=crop" },
-  { title: "Eggplant Parmesan", description: "Classic Italian comfort food", image: "https://images.unsplash.com/photo-1625944525735-e4507c9af44b?q=80&w=2070&auto=format&fit=crop" },
-  { title: "Spinach and Feta Quiche", description: "Savory breakfast or brunch option", image: "https://images.unsplash.com/photo-1647731938165-2a0eff1cf74d?q=80&w=2070&auto=format&fit=crop" },
-  { title: "Vegetable Lasagna", description: "Layers of pasta, veggies, and cheese", image: "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?q=80&w=2070&auto=format&fit=crop" },
-  { title: "Tomato Basil Soup", description: "Comforting and classic soup", image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=2071&auto=format&fit=crop" },
-  { title: "Vegetable Sushi Rolls", description: "Colorful and healthy Japanese-inspired dish", image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?q=80&w=2069&auto=format&fit=crop" },
-  { title: "Lentil Shepherd's Pie", description: "Hearty and comforting vegetarian version", image: "https://images.unsplash.com/photo-1619740455993-9e612b1af08a?q=80&w=2070&auto=format&fit=crop" },
-  { title: "Greek Salad", description: "Fresh and tangy Mediterranean classic", image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=2067&auto=format&fit=crop" },
-  { title: "Vegetable Paella", description: "Flavorful Spanish rice dish", image: "https://images.unsplash.com/photo-1515516969-d4008cc6241a?q=80&w=2074&auto=format&fit=crop" },
-  { title: "Portobello Mushroom Burger", description: "Meaty vegetarian alternative", image: "https://images.unsplash.com/photo-1550317138-10000687a72b?q=80&w=2020&auto=format&fit=crop" },
-  { title: "Caprese Salad", description: "Simple and elegant Italian appetizer", image: "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?q=80&w=2069&auto=format&fit=crop" },
-  { title: "Vegetable Spring Rolls", description: "Light and crispy Asian-inspired snack", image: "https://images.unsplash.com/photo-1670966348386-e56daf2192ed?q=80&w=1974&auto=format&fit=crop" },
-  { title: "Roasted Vegetable Medley", description: "Colorful mix of oven-roasted veggies", image: "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?q=80&w=2069&auto=format&fit=crop" },
-];
+        { title: "Vegan Lentil Curry", description: "A hearty and flavorful plant-based dish", image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=2070&auto=format&fit=crop" },
+        { title: "Quinoa Stuffed Bell Peppers", description: "Colorful and nutritious vegetarian meal", image: "https://images.unsplash.com/photo-1600335895229-6e75511892c8?q=80&w=2070&auto=format&fit=crop" },
+        { title: "Zucchini Noodles with Pesto", description: "Light and refreshing low-carb option", image: "https://images.unsplash.com/photo-1572453800999-e8d2d1589b7c?q=80&w=2070&auto=format&fit=crop" },
+        { title: "Mushroom Risotto", description: "Creamy and comforting Italian classic", image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?q=80&w=2070&auto=format&fit=crop" },
+        { title: "Chickpea Salad Sandwich", description: "Quick and easy plant-based lunch", image: "https://images.unsplash.com/photo-1550507992-eb63ffee0847?q=80&w=2070&auto=format&fit=crop" },
+        { title: "Vegetable Stir-Fry", description: "Colorful mix of veggies in a savory sauce", image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=2072&auto=format&fit=crop" },
+        { title: "Sweet Potato Black Bean Burrito", description: "Filling and flavorful wrapped delight", image: "https://images.unsplash.com/photo-1618414466256-4b62f39b5b30?q=80&w=2070&auto=format&fit=crop" },
+        { title: "Cauliflower Buffalo Wings", description: "Spicy and crispy vegetarian appetizer", image: "https://images.unsplash.com/photo-1562967914-608f82629710?q=80&w=2073&auto=format&fit=crop" },
+        { title: "Eggplant Parmesan", description: "Classic Italian comfort food", image: "https://images.unsplash.com/photo-1629115916087-31b1a55f2b5e?q=80&w=2070&auto=format&fit=crop" },
+        { title: "Spinach and Feta Quiche", description: "Savory breakfast or brunch option", image: "https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?q=80&w=2012&auto=format&fit=crop" },
+        { title: "Vegetable Lasagna", description: "Layers of pasta, veggies, and cheese", image: "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?q=80&w=2070&auto=format&fit=crop" },
+        { title: "Tomato Basil Soup", description: "Comforting and classic soup", image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=2071&auto=format&fit=crop" },
+        { title: "Vegetable Sushi Rolls", description: "Colorful and healthy Japanese-inspired dish", image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?q=80&w=2069&auto=format&fit=crop" },
+        { title: "Lentil Shepherd's Pie", description: "Hearty and comforting vegetarian version", image: "https://images.unsplash.com/photo-1619740455993-9e612b1af08a?q=80&w=2070&auto=format&fit=crop" },
+        { title: "Greek Salad", description: "Fresh and tangy Mediterranean classic", image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=2067&auto=format&fit=crop" },
+        { title: "Vegetable Paella", description: "Flavorful Spanish rice dish", image: "https://images.unsplash.com/photo-1515516969-d4008cc6241a?q=80&w=2074&auto=format&fit=crop" },
+        { title: "Portobello Mushroom Burger", description: "Meaty vegetarian alternative", image: "https://images.unsplash.com/photo-1550317138-10000687a72b?q=80&w=2020&auto=format&fit=crop" },
+        { title: "Caprese Salad", description: "Simple and elegant Italian appetizer", image: "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?q=80&w=2069&auto=format&fit=crop" },
+        { title: "Vegetable Spring Rolls", description: "Light and crispy Asian-inspired snack", image: "https://images.unsplash.com/photo-1606335543042-57c525922933?q=80&w=2070&auto=format&fit=crop" },
+        { title: "Roasted Vegetable Medley", description: "Colorful mix of oven-roasted veggies", image: "https://images.unsplash.com/photo-1546793665-c74683f339c1?q=80&w=2069&auto=format&fit=crop" },
+      ];
       setRecipeCards(recipes);
     };
 
