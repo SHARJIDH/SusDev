@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -16,16 +16,34 @@ export default function EnhancedClimateCharts() {
   const [error, setError] = useState('');
   const [timeFrame, setTimeFrame] = useState('Daily');
 
-  const handleSearch = async () => {
-    if (!location.trim()) {
-      setError('Please enter a location');
-      return;
+  useEffect(() => {
+    getUserLocation();
+  }, []);
+
+  const getUserLocation = () => {
+    if ("geolocation" in navigator) {
+      setLoading(true);
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const { latitude, longitude } = position.coords;
+          fetchClimateData(`${latitude},${longitude}`);
+        },
+        error => {
+          console.error("Error getting user location:", error);
+          setError("Unable to get your location. Please enter a location manually.");
+          setLoading(false);
+        }
+      );
+    } else {
+      setError("Geolocation is not supported by your browser. Please enter a location manually.");
     }
-  
+  };
+
+  const fetchClimateData = async (searchLocation) => {
     setLoading(true);
     setError('');
     try {
-      const response = await fetch(`/api/climate?location=${encodeURIComponent(location.trim())}`);
+      const response = await fetch(`/api/climate?location=${encodeURIComponent(searchLocation)}`);
       const data = await response.json();
       
       if (!response.ok) {
@@ -37,6 +55,7 @@ export default function EnhancedClimateCharts() {
         setClimateData({ hourlyData: [], dailyData: [] });
       } else {
         setClimateData(data.forecast);
+        setLocation(data.location || searchLocation);
         setError('');
       }
     } catch (error) {
@@ -46,6 +65,14 @@ export default function EnhancedClimateCharts() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSearch = () => {
+    if (!location.trim()) {
+      setError('Please enter a location');
+      return;
+    }
+    fetchClimateData(location.trim());
   };
 
   const CustomTooltip = ({ active, payload, label }) => {

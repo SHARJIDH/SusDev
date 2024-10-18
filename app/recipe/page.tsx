@@ -3,14 +3,16 @@ import React, { useState, useEffect } from 'react';
 import { generateRecipe } from '../../utils/gemini';
 import { searchYouTubeVideos } from '../../utils/youtube';
 import RecipeCard from '@/components/RecipeCard/recipeCard';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const TabButton = ({ active, onClick, children }) => (
   <button
     onClick={onClick}
     className={`flex-1 py-2 px-4 rounded-lg text-center transition-colors ${
       active
-        ? 'bg-slate-800 text-white'
-        : 'bg-slate-100 text-slate-800 hover:bg-slate-200'
+        ? 'bg-slate-100 text-slate-800'
+        : ' bg-slate-800 text-white hover:bg-slate-200'
     }`}
   >
     {children}
@@ -26,7 +28,8 @@ export default function Recipes() {
   const [activeTab, setActiveTab] = useState('recipe');
   const [recipeCards, setRecipeCards] = useState([]);
   const [hasSearchResults, setHasSearchResults] = useState(false);
-
+  const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
+  const [ingredients, setIngredients] = useState('');
   useEffect(() => {
     // Generate 20 random recipe cards when the component mounts
     const generateRandomRecipes = () => {
@@ -60,16 +63,28 @@ export default function Recipes() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    await generateRecipeAndFetchVideos(searchTerm ? `Generate a recipe for ${searchTerm}` : "Generate an environmentally friendly recipe");
+  };
+
+  const handleCardClick = async (recipe) => {
+    setSearchTerm(recipe.title);
+    await generateRecipeAndFetchVideos(`Generate a recipe for ${recipe.title}`);
+  };
+
+  const handleIngredientSubmit = async (e) => {
+    e.preventDefault();
+    await generateRecipeAndFetchVideos(`Generate a recipe using these ingredients: ${ingredients}`);
+    setIsIngredientModalOpen(false);
+  };
+
+  const generateRecipeAndFetchVideos = async (prompt) => {
     setLoading(true);
     setError('');
-    const prompt = searchTerm
-      ? `Generate a recipe for ${searchTerm}`
-      : "Generate an environmentally friendly recipe";
     try {
       const generatedRecipe = await generateRecipe(prompt);
       setRecipe(generatedRecipe);
       const videoResults = await searchYouTubeVideos(
-        `${searchTerm || 'eco-friendly'} ${generatedRecipe.split('\n')[0]}`
+        `${searchTerm || ingredients || 'eco-friendly'} ${generatedRecipe.split('\n')[0]}`
       );
       setVideos(videoResults);
       setHasSearchResults(true);
@@ -87,32 +102,50 @@ export default function Recipes() {
     }
   };
 
-  const handleCardClick = async (recipe) => {
-    setSearchTerm(recipe.title);
-    await handleSubmit({ preventDefault: () => {} });
-  };
-console.log(recipe);
   return (
     <div className="mx-auto px-4 mt-20">
-      <div className='flex justify-between items-center mb-4'>
+      <div className='flex flex-col sm:flex-row justify-between items-center mb-4 gap-4'>
         <h1 className="text-3xl font-bold">Video Recipes</h1>
-        <form onSubmit={handleSubmit} className="flex">
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Enter a recipe to search (optional)"
-            className="px-4 py-2 border rounded-l text-black"
-          />
-          <button
-            type="submit"
-            className="bg-slate-500 text-white px-4 py-2 rounded-r hover:bg-slate-500"
-            disabled={loading}
-          >
-            {loading ? 'Generating...' : 'Generate Recipe and Videos'}
-          </button>
-        </form>
+        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+          <Button onClick={() => setIsIngredientModalOpen(true)} className="bg-slate-500 hover:bg-slate-600">
+            Search by Ingredients
+          </Button>
+          <form onSubmit={handleSubmit} className="flex w-full sm:w-auto">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Enter a recipe to search (optional)"
+              className="px-4 py-2 border rounded-l text-black w-full"
+            />
+            <Button type="submit" disabled={loading} className="bg-blue-700 hover:bg-slate-600 rounded-l-none">
+              {loading ? 'Generating...' : 'Generate Recipe'}
+            </Button>
+          </form>
+        </div>
       </div>
+
+      <Dialog open={isIngredientModalOpen} onOpenChange={setIsIngredientModalOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Search by Ingredients</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleIngredientSubmit} className="space-y-4">
+            <input
+              type="text"
+              value={ingredients}
+              onChange={(e) => setIngredients(e.target.value)}
+              placeholder="Enter ingredients (comma-separated)"
+              className="px-4 py-2 border rounded w-full text-black"
+            />
+            <DialogFooter>
+              <Button type="submit" disabled={loading} className="bg-blue-700 hover:bg-slate-600">
+                {loading ? 'Generating...' : 'Find Recipe'}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       {error && (
         <div
