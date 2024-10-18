@@ -46,9 +46,9 @@ export default function Home() {
     },
     {
       id: "3",
-      title: "Water Tracker",
+      title: "Daily Tracker",
       description: "Track your daily water intake and maintain a healthy streak",
-      devlink: "http://localhost:3000/drinkwater",
+      devlink: "http://localhost:3000/dailyTracker",
       imageUrl: "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
     }
   ];
