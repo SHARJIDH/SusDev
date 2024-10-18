@@ -1,9 +1,34 @@
+"use client"
+import React, { useState, useEffect } from 'react';
 import { AnimatedPin } from '@/components/home/animatedPin';
-import { GlobeShape } from '@/components/home/globeShape';
+import GlobeShape from '@/components/home/globeShape';
+import { LinkPreview } from '@/components/ui/link-preview';
 import { Vortex } from '@/components/ui/vortex';
-
+import { ArrowUp } from 'lucide-react';
 
 export default function Home() {
+  const [showTopBtn, setShowTopBtn] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 400) {
+        setShowTopBtn(true);
+      } else {
+        setShowTopBtn(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const goToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   const data = [
     {
       id: "1",
@@ -29,15 +54,48 @@ export default function Home() {
   ];
 
   return (
-    <div className="text-center">
+    <div className="text-center relative">
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes colorChange {
+          0% { color: #4ade80; }
+          50% { color: #60a5fa; }
+          100% { color: #f472b6; }
+        }
+        .fade-in-up {
+          animation: fadeInUp 1s ease-out;
+        }
+        .color-change {
+          animation: colorChange 4s infinite alternate;
+        }
+      `}</style>
       <Vortex
         backgroundColor="black"
         className="flex items-center flex-col justify-center px-2 md:px-10 py-4 w-full h-full"
       >
         <div className='h-screen flex flex-col justify-center items-center'>
-          <h1 className="text-4xl font-bold mb-4">Welcome to SusDev</h1>
-          <p className="mb-8">
-            Generate environmentally friendly recipes using AI & know about the weather conditions in your area
+          <h1 className="text-6xl font-bold mb-4 fade-in-up">
+            Welcome to <span className="color-change">SusDev</span>
+          </h1>
+          <p className="mb-8 text-xl fade-in-up" style={{animationDelay: '0.5s'}}>
+            Generate environmentally friendly{" "}
+            <LinkPreview url="https://sus-dev-crv3.vercel.app/recipe" className="font-bold text-white">
+              Recipes
+            </LinkPreview>{" "}
+            using AI <br/>& know about the{" "}
+            <LinkPreview url="https://sus-dev-crv3.vercel.app/climate" className="font-bold text-white">
+              Weather
+            </LinkPreview>{" "}
+            conditions in your area
           </p>
         </div>
       </Vortex>
@@ -54,6 +112,14 @@ export default function Home() {
         ))}
       </div>
       <GlobeShape />
+      {showTopBtn && (
+        <button
+          className="fixed bottom-5 right-5 bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-300"
+          onClick={goToTop}
+        >
+          <ArrowUp size={24} />
+        </button>
+      )}
     </div>
   );
 }
