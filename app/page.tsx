@@ -1,7 +1,7 @@
 import { AnimatedPin } from '@/components/home/animatedPin';
 import { GlobeShape } from '@/components/home/globeShape';
 import { Vortex } from '@/components/ui/vortex';
-import Link from 'next/link';
+
 
 export default function Home() {
   const data = [
